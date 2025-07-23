@@ -13,6 +13,10 @@ spec:
       labels:
         app: node-api-testing
     spec:
+      initContainers:
+      - name: wait-for-mysql
+        image: busybox
+        command: ['sh', '-c', 'until nc -z mysql-service.testing 3306; do echo waiting for mysql; sleep 2; done;']
       containers:
       - name: node-api
         image: node-api:latest
